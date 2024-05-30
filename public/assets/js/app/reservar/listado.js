@@ -1039,7 +1039,7 @@ function historial(res) {
 	let id = res['parentElement']['parentElement']['parentElement']['parentElement']['parentElement']['children'][0]['textContent'];
 	$("#historial_res").html("Historial de cambios reserva ID: "+id);
 	$("#historial_tbl").bootstrapTable('refresh', {
-    	url: "/reservar/historial_cambios/"+id
+    	url: "reservar/historial_cambios/"+id
      })
 }
 

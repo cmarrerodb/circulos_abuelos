@@ -65,11 +65,13 @@ class CirculosController extends Controller
         if ($validator->fails()) {
             return response()->json(['message' => 'Error en la validación', 'errors' => $validator->errors()], 200);
         }
+        $user_id = Auth::id();
         $datos = [
             'estado_id' => $request->estado_id,
             'municipio_id' => $request->municipio_id,
             'parroquia_id' => $request->parroquia_id,
             'circulo' => $request->circulo,
+            'user_id' => $user_id,
         ];
         try {
             Circulo::create($datos);

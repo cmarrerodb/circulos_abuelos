@@ -230,7 +230,7 @@
         ////////////
         $.ajax({
             type: "POST",
-            url: "/circ_estados",
+            url: "circ_estados",
             headers: {
                 "X-CSRF-Token": $('meta[name="_token"]').attr("content"),
             },
@@ -253,7 +253,7 @@
                     let est_id = $('#crea_circ_estado').val();
                     $.ajax({
                         type: "POST",
-                        url: "/circ_municipios",
+                        url: "circ_municipios",
                         headers: {
                             "X-CSRF-Token": $('meta[name="_token"]').attr("content"),
                         },
@@ -277,7 +277,7 @@
                     let mun_id = $('#crea_circ_municipio').val();
                     $.ajax({
                         type: "POST",
-                        url: "/circ_parroquias",
+                        url: "circ_parroquias",
                         headers: {
                             "X-CSRF-Token": $('meta[name="_token"]').attr("content"),
                         },
@@ -470,7 +470,7 @@
                     };
                     $.ajax({
                         type: "POST",
-                        url: "/participantes",
+                        url: "participantes",
                         headers: {
                             "X-CSRF-Token": $('meta[name="_token"]').attr("content"),
                         },
@@ -515,7 +515,7 @@
         ///////////
         $.ajax({
             type: "POST",
-            url: "/check_cedula",
+            url: "check_cedula",
             headers: {
                 "X-CSRF-Token": $('meta[name="_token"]').attr("content"),
             },

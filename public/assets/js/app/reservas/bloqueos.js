@@ -172,7 +172,7 @@ $(document).ready(function(){
 							confirmButtonText: "Continuar",
 						});
 						$("#bloqueos_tbl").bootstrapTable('refresh', {
-							url: "/reservar/listabloqueos"
+							url: "reservar/listabloqueos"
 						})
 					}
 				})

@@ -130,7 +130,7 @@
                     $('[name="btnAdd"]').prop('disabled',true);
                     $.ajax({
                         type: "POST",
-                        url: "/circ_estados",
+                        url: "circ_estados",
                         headers: {
                             "X-CSRF-Token": $('meta[name="_token"]').attr("content"),
                         },
@@ -147,7 +147,7 @@
                                 let est_id = $('#circ_agr_estados').val();
                                 $.ajax({
                                     type: "POST",
-                                    url: "/circ_municipios",
+                                    url: "circ_municipios",
                                     headers: {
                                         "X-CSRF-Token": $('meta[name="_token"]').attr("content"),
                                     },
@@ -168,7 +168,7 @@
                     }); 
                     $.ajax({
                         type: "POST",
-                        url: "/circ_municipios",
+                        url: "circ_municipios",
                         headers: {
                             "X-CSRF-Token": $('meta[name="_token"]').attr("content"),
                         },
@@ -185,7 +185,7 @@
                             $('#circ_agr_municipios').on('change', function() {
                                 $.ajax({
                                     type: "POST",
-                                    url: "/circ_parroquias",
+                                    url: "circ_parroquias",
                                     headers: {
                                         "X-CSRF-Token": $('meta[name="_token"]').attr("content"),
                                     },
@@ -206,7 +206,7 @@
                     });
                     $.ajax({
                         type: "POST",
-                        url: "/circ_parroquias",
+                        url: "circ_parroquias",
                         headers: {
                             "X-CSRF-Token": $('meta[name="_token"]').attr("content"),
                         },
@@ -351,7 +351,7 @@
                     let prevSelectedState = null;
                     $.ajax({
                         type: "POST",
-                        url: "/circ_estados",
+                        url: "circ_estados",
                         headers: {
                             "X-CSRF-Token": $('meta[name="_token"]').attr("content"),
                         },
@@ -441,7 +441,7 @@
             let est_id = cir_est_sel;
             $.ajax({
                 type: "POST",
-                url: "/circ_municipios",
+                url: "circ_municipios",
                 headers: {
                     "X-CSRF-Token": $('meta[name="_token"]').attr("content"),
                 },
@@ -479,7 +479,7 @@
             let mun_id = $("#circ_municipios").val();
             $.ajax({
                 type: "POST",
-                url: "/circ_parroquias",
+                url: "circ_parroquias",
                 headers: {
                     "X-CSRF-Token": $('meta[name="_token"]').attr("content"),
                 },

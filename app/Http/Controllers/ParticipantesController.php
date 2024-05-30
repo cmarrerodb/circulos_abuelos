@@ -7,6 +7,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use DateTime;
 use Validator;
 use GuzzleHttp\Client;
@@ -98,6 +99,7 @@ class ParticipantesController extends Controller
         ->where('estado_id','=',$estado_id)
         ->get();
         $parroquia_id = json_decode($parroquia,true)[0]['parroquia_id'];
+        $user_id = Auth::id();
         $datos = [
             'cedula' => $request->cedula,
             'circulo_id' => $circulo_id,
@@ -111,6 +113,7 @@ class ParticipantesController extends Controller
             'estado_id' => $estado_id,
             'municipio_id' => $municipio_id,
             'parroquia_id' => $parroquia_id,
+            'user_id' => $user_id,
         ];
         DB::beginTransaction();
         try {

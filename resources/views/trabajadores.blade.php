@@ -376,7 +376,7 @@
                             };
                             $.ajax({
                                 type: "POST",
-                                url: "/trabajador/check",
+                                url: "trabajador/check",
                                 data: data,
                                 headers: {
                                     "X-CSRF-Token": $('meta[name="_token"]').attr("content"),
