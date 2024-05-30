@@ -306,13 +306,13 @@ return [
             'text'        => 'Participantes',
             'url'         => 'participantes',
             'icon'        => 'fas fa-user-tie',
-            // 'can'         => 'admin.paricipants.index',
+            'can'         => 'admin.participants.index',
         ],
         [
             'text'        => 'Circulos',
             'url'         => 'circulos',
             'icon'        => 'fas fa-circle',
-            // 'can'         => 'admin.workers.list',
+            'can'         => 'admin.circle.index',
         ],
         // [
         //     'text'    => 'Gráficos',
