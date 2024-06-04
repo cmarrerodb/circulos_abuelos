@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Encryption\Encrypter;
+use App\Models\User;
+use App\Models\Circulo;
+use App\Models\Participante;
+
 
 class HomeController extends Controller
 {
@@ -23,6 +28,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $usuarios = User::count();
+        $circulos = Circulo::whereNull('deleted_at')->count();
+        $participantes = Participante::whereNull('deleted_at')->count();
+        return view('home', compact(['usuarios','circulos','participantes']));
+    
+        // return view('home');
     }
 }
