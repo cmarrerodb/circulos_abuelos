@@ -44,7 +44,7 @@
         >
             <thead>
                 <tr>
-                    <th colspan="5">LISTADOD DE CÍRCULOS</th>
+                    <th colspan="6">LISTADOD DE CÍRCULOS</th>
                     <th data-field="acciones" data-align="center" data-formatter="accionesFormatter" data-events="accionesEvents"></th>
                 </tr>
                 <tr>
@@ -52,6 +52,7 @@
                     <th data-field="estado" data-filter-control="input" data-sortable="true">ESTADO</th>
                     <th data-field="municipio" data-filter-control="input" data-sortable="true">MUNICIPIO</th>
                     <th data-field="parroquia" data-filter-control="input" data-sortable="true">PARROQUIA</th>
+                    <th data-field="comunidad" data-filter-control="input" data-sortable="true">COMUNIDAD</th>
                     <th data-field="circulo" data-sortable="true">CÍRCULO</th>
                 </tr>
             </thead>
@@ -267,6 +268,7 @@
             $('[name="btnAdd"]').prop('disabled',false);            
         });
         var circ=null;
+        var com = null;
         var cir_est_sel = null;
         var cir_mun_sel = null;
 
@@ -305,6 +307,7 @@
                         estado_id:$("#circ_estados").val(),
                         municipio_id:$("#circ_municipios").val(),
                         parroquia_id:$("#circ_parroquias").val(),
+                        comunidad:$("#ln_comunidad").val(),
                         circulo:$("#ln_circulo").val(),
                     }
                     $.ajax({
@@ -338,6 +341,7 @@
                     $('#tbl-circulos').bootstrapTable('updateCell', {index: index, field: 'estado', value: $('#circ_estados option:selected').text()});
                     $('#tbl-circulos').bootstrapTable('updateCell', {index: index, field: 'municipio', value: $('#circ_municipios option:selected').text()});
                     $('#tbl-circulos').bootstrapTable('updateCell', {index: index, field: 'parroquia', value: $('#circ_parroquias option:selected').text()});
+                    $('#tbl-circulos').bootstrapTable('updateCell', {index: index, field: 'comunidad', value: com});
                     $('#tbl-circulos').bootstrapTable('updateCell', {index: index, field: 'circulo', value: circ});
                     $("#icono_editar"+index).html('<i class="fas fa-edit"></i>');
                     $("#icono_eliminar"+index).html('<i class="fas fa-trash"></i>');
@@ -347,6 +351,7 @@
                     $('#tbl-circulos').bootstrapTable('refresh');
                 } else {
                     circ =row.circulo;
+                    com =row.comunidad;
                     let ci_estado = row.estado;
                     let prevSelectedState = null;
                     $.ajax({
@@ -388,6 +393,7 @@
                         },
                     }); 
                     
+                    $('#tbl-circulos').bootstrapTable('updateCell', {index: index, field: 'comunidad', value: '<input class="form-control" id="ln_comunidad" type="text" value="' + row.comunidad + '">'});
                     $('#tbl-circulos').bootstrapTable('updateCell', {index: index, field: 'circulo', value: '<input class="form-control" id="ln_circulo" type="text" value="' + row.circulo + '">'});
                 }
             },
@@ -396,6 +402,7 @@
                     $('#tbl-circulos').bootstrapTable('updateCell', {index: index, field: 'estado', value: row.estado});
                     $('#tbl-circulos').bootstrapTable('updateCell', {index: index, field: 'municipio', value: row.municipio});
                     $('#tbl-circulos').bootstrapTable('updateCell', {index: index, field: 'parroquia', value: row.parroquia});
+                    $('#tbl-circulos').bootstrapTable('updateCell', {index: index, field: 'comunidad', value: com});
                     $('#tbl-circulos').bootstrapTable('updateCell', {index: index, field: 'circulo', value: circ});
                     $("#icono_editar"+index).html('<i class="fas fa-edit"></i>');
                     $("#icono_eliminar"+index).html('<i class="fas fa-trash"></i>');

@@ -17,6 +17,7 @@ class Circulo extends Model
         'parroquia_id',
         'circulo',
         'user_id',
+        'comunidad',
     ];
     public function estado()
     {

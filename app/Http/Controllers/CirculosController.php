@@ -72,6 +72,7 @@ class CirculosController extends Controller
             'parroquia_id' => $request->parroquia_id,
             'circulo' => $request->circulo,
             'user_id' => $user_id,
+            'comunidad' => $request->parroquia_id,
         ];
         try {
             Circulo::create($datos);
@@ -105,6 +106,7 @@ class CirculosController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'circulo' => 'required|min:5|max:50',
+            'comunidad' => 'required|min:5',
         ], [
             'required' => 'El campo :attribute es obligatorio.',
             'min' => 'El campo :attribute debe tener al menos 5 caracteres',
@@ -117,6 +119,7 @@ class CirculosController extends Controller
             'estado_id' => $request->estado_id,
             'municipio_id' => $request->municipio_id,
             'parroquia_id' => $request->parroquia_id,
+            'comunidad' => $request->comunidad,
             'circulo' => $request->circulo,
         ];
         try {

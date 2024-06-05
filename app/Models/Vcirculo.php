@@ -11,7 +11,12 @@ class Vcirculo extends Model
         'municipio',
         'parroquia_id',
         'parroquia',
-        'circulo'
+        'comunidad',
+        'circulo',
+        'usuario_id',
+        'usuario',
+        'created_at'
+
     ];
     public function estado()
     {
