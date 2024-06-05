@@ -16,20 +16,26 @@
     </span>
 
     <div class="row d-none agregarCirculo">
-        <div class="col-xs-12 col-sm-12 col-md-3 form-group">
+        <div class="col-xs-12 col-sm-12 col-md-4 form-group">
             <label for="crea_circ_estado">ESTADO</label>
             <select id="crea_circ_estado" class="form-control"></select>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-3 form-group">
+        <div class="col-xs-12 col-sm-12 col-md-4 form-group">
         <label for="crea_circ_municipio">MUNICIPIO</label>
             <select id="crea_circ_municipio" class="form-control"></select>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-3 form-group">
+        <div class="col-xs-12 col-sm-12 col-md-4 form-group">
         <label for="crea_circ_parroquia">PARROQUIA</label>
             <select id="crea_circ_parroquia" class="form-control"></select>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-3 form-group">
-        <label for="crea_circ_nombre">CÍRCULO</label>
+    </div>
+    <div class="row d-none agregarCirculo">
+        <div class="col-xs-12 col-sm-12 col-md-5 form-group">
+            <label for="crea_circ_nombre">COMUNIDAD</label>
+            <input type="text" id="crea_circ_comunidad" class="form-control">
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-5 form-group">
+            <label for="crea_circ_nombre">CÍRCULO</label>
             <input type="text" id="crea_circ_nombre" class="form-control">
         </div>
     </div>
@@ -340,6 +346,7 @@
                 'estado_id':$("#crea_circ_estado").val(),
                 'municipio_id':$("#crea_circ_municipio").val(),
                 'parroquia_id':$("#crea_circ_parroquia").val(),
+                'comunidad':$("#crea_circ_comunidad").val(),
                 'circulo':$("#crea_circ_nombre").val(),
             }
             $.ajax({

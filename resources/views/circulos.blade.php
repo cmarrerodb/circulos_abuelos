@@ -48,11 +48,11 @@
                     <th data-field="acciones" data-align="center" data-formatter="accionesFormatter" data-events="accionesEvents"></th>
                 </tr>
                 <tr>
-                    <th data-field="id" data-filter-control="input" data-sortable="true">ID</th>
-                    <th data-field="estado" data-filter-control="input" data-sortable="true">ESTADO</th>
-                    <th data-field="municipio" data-filter-control="input" data-sortable="true">MUNICIPIO</th>
-                    <th data-field="parroquia" data-filter-control="input" data-sortable="true">PARROQUIA</th>
-                    <th data-field="comunidad" data-filter-control="input" data-sortable="true">COMUNIDAD</th>
+                    <th data-field="id" data-sortable="true">ID</th>
+                    <th data-field="estado" data-sortable="true">ESTADO</th>
+                    <th data-field="municipio" data-sortable="true">MUNICIPIO</th>
+                    <th data-field="parroquia" data-sortable="true">PARROQUIA</th>
+                    <th data-field="comunidad" data-sortable="true">COMUNIDAD</th>
                     <th data-field="circulo" data-sortable="true">CÍRCULO</th>
                 </tr>
             </thead>
