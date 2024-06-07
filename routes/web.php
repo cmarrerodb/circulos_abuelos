@@ -21,10 +21,8 @@ use App\Http\Controllers\AuxiliaresController;
 
 Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
-Route::get('/home', function() {
-    return view('home');
-})->name('home')->middleware('auth');
 Route::middleware(['auth'])->group(function () {
     Route::resource('roles', RolesController::class)->names('admin.roles');
     Route::get('roles/{id}/search', [RolesController::class, 'search'])->name('admin.roles.search');    
