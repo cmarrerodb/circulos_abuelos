@@ -106,3 +106,14 @@
         </a>
     </p>
 @stop
+@section('css')
+    <link href="{{ asset('assets/css/toastr.min.css') }}" rel="stylesheet" type="text/css" />
+@stop
+@section('js')
+    <script src="{{ asset('/assets/libs/toastr/toastr.min.js') }}"></script>
+    @if(session('success'))
+        <script>
+            toastr.success("{{ session('success') }}");
+        </script>
+    @endif
+@stop
