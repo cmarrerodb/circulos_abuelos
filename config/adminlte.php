@@ -488,14 +488,13 @@ return [
                 [
                     'text' => 'Registrar Usuarios',
                     'url'  => 'register',
-                    // 'url'  => '/register',
                     'icon'=> 'fas fa-user-check',
                     'can'=> 'register',
                 ],
-                // [
-                //     'text' => 'Usuarios',
-                //     'url'  => '#',
-                // ],
+                [
+                    'text' => 'Usuarios',
+                    'url'  => 'users',
+                ],
             ],
         ],
 

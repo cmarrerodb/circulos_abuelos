@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CirculosController;
 use App\Http\Controllers\ParticipantesController;
 use App\Http\Controllers\AuxiliaresController;
-
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +24,15 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
 Route::middleware(['auth'])->group(function () {
+    Route::resource('users', UserController::class)->names([
+        'index'   => 'users.index',
+        'create'  => 'users.create',
+        'store'   => 'users.store',
+        'show'    => 'users.show',
+        'edit'    => 'users.edit',
+        'update'  => 'users.update',
+        'destroy' => 'users.destroy',
+    ]);
     Route::resource('roles', RolesController::class)->names('admin.roles');
     Route::get('roles/{id}/search', [RolesController::class, 'search'])->name('admin.roles.search');    
     Route::get('roles/{id}/assign', [RolesController::class, 'assign'])->name('admin.roles.assign');
