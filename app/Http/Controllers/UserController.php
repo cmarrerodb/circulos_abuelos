@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-
+use App\Rules\PasswordValidation;
+use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
     public function index(Request $request)
@@ -21,6 +22,7 @@ class UserController extends Controller
         }
 
         $users = $query->get();
+        info($users);
         return view('users.index', compact('users'));
     }
 
@@ -38,14 +40,14 @@ class UserController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'role' => 'required|exists:roles,id'
         ]);
-
+        $rol=Role::where('id','=',$request->role)->pluck('name');
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
         ]);
 
-        $user->assignRole($request->role);
+        $user->assignRole($rol);
 
         return redirect()->route('users.index');
     }
@@ -60,22 +62,48 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
-            'password' => 'nullable|string|min:8|confirmed',
-            'role' => 'required|exists:roles,id'
-        ]);
-    
         $user = User::findOrFail($id);
+        $emailChanged = $request->input('email') !== $user->email;
+        $rules = [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                $emailChanged ? Rule::unique('users') : '',
+            ],
+            'password' => [
+                'nullable',
+                'string',
+                'confirmed',
+                new PasswordValidation,
+                function ($attribute, $value, $fail) use ($user) {
+                    if (!$value && !$user->password) {
+                        $fail('El campo contraseña es obligatorio porque el usuario no tiene una contraseña asignada.');
+                    }
+                },
+            ],
+            'role' => 'required|exists:roles,id'
+        ];
+        $messages = [
+            'name.required' => 'El campo nombre es obligatorio.',
+            'name.max' => 'El nombre no puede tener más de :max caracteres.',
+            'email.required' => 'El campo email es obligatorio.',
+            'email.email' => 'El email debe ser una dirección de correo electrónico válida.',
+            'email.max' => 'El email no puede tener más de :max caracteres.',
+            'email.unique' => 'El email ya está en uso.',
+            'password.required' => 'El campo contraseña es obligatorio.',
+            'password.confirmed' => 'La confirmación de la contraseña no coincide.',
+        ];
+        $validated = $request->validate($rules, $messages);
+        $rol=Role::where('id','=',$request->role)->pluck('name');
         $user->update([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => $validated['password'] ? bcrypt($validated['password']) : $user->password,
         ]);
-    
-        $user->syncRoles($request->role);
-    
+        $user->syncRoles($rol);
         return redirect()->route('users.index');
     }
 
