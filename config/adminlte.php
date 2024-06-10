@@ -494,6 +494,8 @@ return [
                 [
                     'text' => 'Usuarios',
                     'url'  => 'users',
+                    'icon'=> 'fas fa-user',
+                    'can'=> 'users.index',
                 ],
             ],
         ],
