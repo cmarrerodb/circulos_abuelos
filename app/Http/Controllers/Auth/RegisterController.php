@@ -7,60 +7,39 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use App\Rules\PasswordValidation;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
-    use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
+    use RegistersUsers {
+        register as originalRegister;
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
+    protected $redirectTo = '/register';
+
+    public function __construct()
+    {
+    }
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'confirmed', new PasswordValidation],
+        ], [
+            'name.required' => 'El campo nombre es obligatorio.',
+            'name.max' => 'El nombre no puede tener más de :max caracteres.',
+            'email.required' => 'El campo email es obligatorio.',
+            'email.email' => 'El email debe ser una dirección de correo electrónico válida.',
+            'email.max' => 'El email no puede tener más de :max caracteres.',
+            'email.unique' => 'El email ya está en uso.',
+            'password.required' => 'El campo contraseña es obligatorio.',
+            'password.confirmed' => 'La confirmación de la contraseña no coincide.',
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
     protected function create(array $data)
     {
         return User::create([
@@ -68,5 +47,17 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function register(Request $request)
+    {
+        // Validar la solicitud
+        $this->validator($request->all())->validate();
+
+        // Crear el usuario
+        $user = $this->create($request->all());
+
+        // Redirigir con un mensaje de éxito
+        return redirect('/register')->with('success', "El usuario {$user->name} ha sido creado exitosamente");
     }
 }

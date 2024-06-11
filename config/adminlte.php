@@ -485,15 +485,18 @@ return [
                     'can'  => 'admin.permissions.index',
                     
                 ],
-                // [
-                //     'text' => 'Roles Usuarios',
-                //     'url'  => '#',
-                //     'icon'=> 'fas fa-user-check',
-                // ],
-                // [
-                //     'text' => 'Usuarios',
-                //     'url'  => '#',
-                // ],
+                [
+                    'text' => 'Registrar Usuarios',
+                    'url'  => 'register',
+                    'icon'=> 'fas fa-user-check',
+                    'can'=> 'register',
+                ],
+                [
+                    'text' => 'Usuarios',
+                    'url'  => 'users',
+                    'icon'=> 'fas fa-user',
+                    'can'=> 'users.index',
+                ],
             ],
         ],
 
