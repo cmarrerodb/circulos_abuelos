@@ -76,6 +76,7 @@ class CirculosController extends Controller
             'comunidad' => $request->comunidad,
         ];
         try {
+            $this->auditoria($request->user(),addslashes($request->ip()));
             Circulo::create($datos);
             $circulos = Vcirculo::select('id','circulo')->orderBy('circulo')->get();
             return response()->json(['circulos' => $circulos,'message' => 'Círculo creado exitosamente','status' =>200], 200);
