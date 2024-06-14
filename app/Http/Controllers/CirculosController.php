@@ -124,13 +124,24 @@ class CirculosController extends Controller
             'circulo' => $request->circulo,
         ];
         try {
+            $this->auditoria($request->user(),addslashes($request->ip()));
             Circulo::where('id', $request->id)->update($datos);
             return response()->json(['message' => 'Círculo actualizado exitosamente','status' =>200], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Ha ocurrido un error en la actualización del círculo','status'=>500], 200);
         }        
     }
-
+    private function auditoria($user,$ip) {
+        $applicationName = addslashes("CirculoAbuelos");
+        $cedula = addslashes("0");
+        $usuario = addslashes($user->email);
+        $nombreUsuario = addslashes($user->name);
+        DB::statement("set cc.usuario = '$usuario'");
+        DB::statement("set cc.ip = '$ip'");
+        DB::statement("set cc.ci_usuario = '$cedula'");
+        DB::statement("set cc.nombre_usuario = '$nombreUsuario'");
+        DB::statement("set cc.application_name = '$applicationName'");
+    }    
     /**
      * Remove the specified resource from storage.
      */
