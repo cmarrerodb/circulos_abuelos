@@ -113,6 +113,7 @@
                         <td><select class="form-control" id="circ_agr_estados"><select></td>
                         <td><select class="form-control" id="circ_agr_municipios"><select></td>
                         <td><select class="form-control" id="circ_agr_parroquias"><select></td>
+                        <td><input type="text" class="form-control" id="agr_comunidad"></td>
                         <td><input type="text" class="form-control" id="agr_circulo"></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Acciones">
@@ -228,6 +229,7 @@
                             'estado_id':$("#circ_agr_estados").val(),
                             'municipio_id':$("#circ_agr_municipios").val(),
                             'parroquia_id':$("#circ_agr_parroquias").val(),
+                            'comunidad':$("#agr_comunidad").val(),
                             'circulo':$("#agr_circulo").val(),
                         }
                         $.ajax({

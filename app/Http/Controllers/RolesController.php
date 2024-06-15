@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class RolesController extends Controller
@@ -53,6 +54,7 @@ class RolesController extends Controller
             $permissionsArray = array_merge($permissionsArray, array_flip([$key => $key]));
         }
         $permissionsList = array_values($permissionsArray);
+        $this->auditoria($request->user(),addslashes($request->ip()));
         $role = Role::create($request->all());
         $role->syncPermissions($permissionsList);
         return redirect()->route('admin.roles.edit',$role)->with('info','Rol creado exitosamente');
@@ -89,6 +91,7 @@ class RolesController extends Controller
         }
         $permissionsList = array_values($permissionsArray);
         $role = Role::find($role->id);
+        $this->auditoria($request->user(),addslashes($request->ip()));
         $role->update($request->all());
         $role->permissions()->sync($permissionsList);
     
@@ -195,4 +198,15 @@ class RolesController extends Controller
         }
         return view('admin.roles.assign', compact('id','name', 'roles','users','recordsPerPage','search'))->with(session()->flash('info', 'La asignación y eliminación de usuarios al rol ' . $name . ' fue realizada exitosamente'));        
     }    
+    private function auditoria($user,$ip) {
+        $applicationName = addslashes("CirculoAbuelos");
+        $cedula = addslashes("0");
+        $usuario = addslashes($user->email);
+        $nombreUsuario = addslashes($user->name);
+        DB::statement("set cc.usuario = '$usuario'");
+        DB::statement("set cc.ip = '$ip'");
+        DB::statement("set cc.ci_usuario = '$cedula'");
+        DB::statement("set cc.nombre_usuario = '$nombreUsuario'");
+        DB::statement("set cc.application_name = '$applicationName'");
+    }       
 }

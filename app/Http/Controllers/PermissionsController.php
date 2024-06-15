@@ -49,6 +49,7 @@ class PermissionsController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();   
         }
+        $this->auditoria($request->user(),addslashes($request->ip()));
         $permission = Permission::create($request->all());
         return redirect()->route('admin.permissions.edit',$permission)->with('info','Permiso creado exitosamente');
 
@@ -85,6 +86,7 @@ class PermissionsController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $permission = Permission::find($id);
+        $this->auditoria($request->user(),addslashes($request->ip()));
         $permission->update($request->all());
         return redirect()->route('admin.permissions.edit',$permission)->with('info','Permiso actualizado exitosamente');
     }
@@ -124,4 +126,15 @@ class PermissionsController extends Controller
         session(['current_page' => $request->input('current_page', 1)]);
         return view('admin.permissions.index', compact('permiso', 'cantRegistros', 'recordsPerPage', 'search', 'paginatedResults'));
     }
+    private function auditoria($user,$ip) {
+        $applicationName = addslashes("CirculoAbuelos");
+        $cedula = addslashes("0");
+        $usuario = addslashes($user->email);
+        $nombreUsuario = addslashes($user->name);
+        DB::statement("set cc.usuario = '$usuario'");
+        DB::statement("set cc.ip = '$ip'");
+        DB::statement("set cc.ci_usuario = '$cedula'");
+        DB::statement("set cc.nombre_usuario = '$nombreUsuario'");
+        DB::statement("set cc.application_name = '$applicationName'");
+    }       
 }

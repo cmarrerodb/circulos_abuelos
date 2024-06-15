@@ -420,56 +420,57 @@ return [
         //         ],
         //     ],
         // ],
+        // [
+        //     'text'    => 'Auxiliares',
+        //     'icon'    => 'fas fa-toolbox',
+        //     'can'     => 'admin.auxiliary.list',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Auditoría',
+        //             'url'  => '#',
+        //         ],
+        //         // [
+        //         //     'text' => 'Cargos',
+        //         //     'url'  => '#',
+        //         // ],
+        //         // [
+        //         //     'text' => 'Circuitos',
+        //         //     'url'  => '#',
+        //         // ],
+        //         // [
+        //         //     'text' => 'Circuitos Parroquia',
+        //         //     'url'  => '#',
+        //         // ],
+        //         // [
+        //         //     'text' => 'Dependencias',
+        //         //     'url'  => '#',
+        //         // ],
+        //         // [
+        //         //     'text' => 'Entes',
+        //         //     'url'  => '#',
+        //         // ],
+        //         // [
+        //         //     'text' => 'Gabinetes',
+        //         //     'url'  => '#',
+        //         // ],
+        //         [
+        //             'text' => 'Estados',
+        //             'url'  => '#',
+        //         ],
+        //         [
+        //             'text' => 'Municipios',
+        //             'url'  => '#',
+        //         ],
+        //         [
+        //             'text' => 'Parroquias',
+        //             'url'  => '#',
+        //         ],
+        //     ],
+        // ],
         [
-            'text'    => 'Auxiliares',
-            'icon'    => 'fas fa-toolbox',
-            'can'     => 'admin.auxiliary.list',
-            'submenu' => [
-                [
-                    'text' => 'Auditoría',
-                    'url'  => '#',
-                ],
-                // [
-                //     'text' => 'Cargos',
-                //     'url'  => '#',
-                // ],
-                // [
-                //     'text' => 'Circuitos',
-                //     'url'  => '#',
-                // ],
-                // [
-                //     'text' => 'Circuitos Parroquia',
-                //     'url'  => '#',
-                // ],
-                // [
-                //     'text' => 'Dependencias',
-                //     'url'  => '#',
-                // ],
-                // [
-                //     'text' => 'Entes',
-                //     'url'  => '#',
-                // ],
-                // [
-                //     'text' => 'Gabinetes',
-                //     'url'  => '#',
-                // ],
-                [
-                    'text' => 'Estados',
-                    'url'  => '#',
-                ],
-                [
-                    'text' => 'Municipios',
-                    'url'  => '#',
-                ],
-                [
-                    'text' => 'Parroquias',
-                    'url'  => '#',
-                ],
-            ],
-        ],
-        [
-            'text'    => 'Usuarios',
-            'icon'    => 'fas fa-users-cog',
+            'text'    => 'Seguridad',
+            'icon'    => 'fas fa-shield-alt',
+            // 'icon'    => 'fas fa-users-cog',
             'can'    => 'admin.users.list',
             'submenu' => [
                 [
@@ -499,6 +500,12 @@ return [
                 ],
             ],
         ],
+        [
+            'text'        => 'Auditoria',
+            'url'         => 'auditoria',
+            'icon'        => 'fas fa-clipboard-check',
+            // 'can'         => 'admin.circle.index',
+        ],        
 
 
     ],

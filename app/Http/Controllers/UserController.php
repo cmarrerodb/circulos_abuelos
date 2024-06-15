@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Rules\PasswordValidation;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
     public function index(Request $request)
@@ -41,6 +42,7 @@ class UserController extends Controller
             'role' => 'required|exists:roles,id'
         ]);
         $rol=Role::where('id','=',$request->role)->pluck('name');
+        $this->auditoria($request->user(),addslashes($request->ip()));
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -98,6 +100,7 @@ class UserController extends Controller
         ];
         $validated = $request->validate($rules, $messages);
         $rol=Role::where('id','=',$request->role)->pluck('name');
+        $this->auditoria($request->user(),addslashes($request->ip()));
         $user->update([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -113,4 +116,15 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index');
     }
+    private function auditoria($user,$ip) {
+        $applicationName = addslashes("CirculoAbuelos");
+        $cedula = addslashes("0");
+        $usuario = addslashes($user->email);
+        $nombreUsuario = addslashes($user->name);
+        DB::statement("set cc.usuario = '$usuario'");
+        DB::statement("set cc.ip = '$ip'");
+        DB::statement("set cc.ci_usuario = '$cedula'");
+        DB::statement("set cc.nombre_usuario = '$nombreUsuario'");
+        DB::statement("set cc.application_name = '$applicationName'");
+    }   
 }

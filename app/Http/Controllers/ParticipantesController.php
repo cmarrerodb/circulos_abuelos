@@ -117,6 +117,7 @@ class ParticipantesController extends Controller
         ];
         DB::beginTransaction();
         try {
+            $this->auditoria($request->user(),addslashes($request->ip()));
             Participante::create($datos);
             DB::commit();
             return response()->json(['message' => 'Participante registrado exitosamente','status' =>200], 200);
@@ -125,7 +126,17 @@ class ParticipantesController extends Controller
             return response()->json(['message' => 'Ha ocurrido un error en el registro del participante','status'=>500], 200);
         }              
     }
-
+    private function auditoria($user,$ip) {
+        $applicationName = addslashes("CirculoAbuelos");
+        $cedula = addslashes("0");
+        $usuario = addslashes($user->email);
+        $nombreUsuario = addslashes($user->name);
+        DB::statement("set cc.usuario = '$usuario'");
+        DB::statement("set cc.ip = '$ip'");
+        DB::statement("set cc.ci_usuario = '$cedula'");
+        DB::statement("set cc.nombre_usuario = '$nombreUsuario'");
+        DB::statement("set cc.application_name = '$applicationName'");
+    }   
     /**
      * Display the specified resource.
      */
