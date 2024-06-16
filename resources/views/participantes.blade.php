@@ -151,7 +151,7 @@
             data-page-size-func="pageSizeFunc"
             data-page-size="10" 
             data-buttons="btnAgregar"
-            data-show-export="true" 
+            data-show-export="true"
             data-export-data-type="all" 
             data-export-types="['csv', 'json', 'excel']" 
             data-show-fullscreen="true" 
@@ -162,29 +162,31 @@
             data-search="true"
             data-search-accent-neutralise="true"
             data-show-refresh="true"
+            data-filter-control="true"
         >
             <thead>
                 <tr>
-                    <th colspan="17">PARTICIPANTES</th>
+                    <th colspan="18">PARTICIPANTES</th>
                 </tr>
                 <tr>
                     <th data-field="id"data-sortable="true">ID</th>
                     <th data-field="circulo_id"data-sortable="true" data-visible="false">ID<br/>CÍRCULO</th>
-                    <th data-field="circulo"data-sortable="true" data-visible="true">CÍRCULO</th>
-                    <th data-field="primer_nombre"data-sortable="true" data-visible="true">PRIMER<br/>NOMBRE</th>
-                    <th data-field="segundo_nombre"data-sortable="true" data-visible="false">SEGUNDO<br/>NOMBRE</th>
-                    <th data-field="primer_apellido" data-sortable="true" data-visible="true">PRIMER<br/>APELLIDO</th>
-                    <th data-field="segundo_apellido" data-sortable="true" data-visible="false">SEGUNDO<br/>APELLIDO</th>
-                    <th data-field="fecha_nacimiento" data-sortable="true" data-visible="true">FECHA<br/>NACIMIENTO</th>
-                    <th data-field="sexo" data-sortable="true" data-visible="true">SEXO</th>
+                    <th data-field="circulo"data-sortable="true" data-visible="false" data-filter-control="input">CÍRCULO</th>
+                    <th data-field="telefono"data-sortable="true" data-visible="true" data-filter-control="input">TELËFONO</th>
+                    <th data-field="primer_nombre"data-sortable="true" data-visible="true" data-filter-control="input">PRIMER<br/>NOMBRE</th>
+                    <th data-field="segundo_nombre"data-sortable="true" data-visible="false" data-filter-control="input">SEGUNDO<br/>NOMBRE</th>
+                    <th data-field="primer_apellido" data-sortable="true" data-visible="true" data-filter-control="input">PRIMER<br/>APELLIDO</th>
+                    <th data-field="segundo_apellido" data-sortable="true" data-visible="false" data-filter-control="input">SEGUNDO<br/>APELLIDO</th>
+                    <th data-field="fecha_nacimiento" data-sortable="true" data-visible="true" data-filter-control="input">FECHA<br/>NACIMIENTO</th>
+                    <th data-field="sexo" data-sortable="true" data-visible="true" data-filter-control="select">SEXO</th>
                     <th data-field="estado_civil_id" data-sortable="true" data-visible="false">ID EDO<br/>CIVIL</th>
-                    <th data-field="estado_civil" data-sortable="true" data-visible="true">EDO<br/>CIVIL</th>
+                    <th data-field="estado_civil" data-sortable="true" data-visible="true" data-filter-control="select">EDO<br/>CIVIL</th>
                     <th data-field="estado_id" data-sortable="true" data-visible="false">ID<br/>ESTADO</th>
-                    <th data-field="estado" data-sortable="true" data-visible="true">ESTADO</th>
+                    <th data-field="estado" data-sortable="true" data-visible="true" data-filter-control="select">ESTADO</th>
                     <th data-field="municipio_id" data-sortable="true" data-visible="false">ID<br/>MUNICIPIO</th>
-                    <th data-field="municipio" data-sortable="true" data-visible="true">MUNICIPIO</th>
+                    <th data-field="municipio" data-sortable="true" data-visible="true" data-filter-control="select">MUNICIPIO</th>
                     <th data-field="parroquia_id" data-sortable="true" data-visible="false">ID<br/>PARROQUIA</th>
-                    <th data-field="parroquia" data-sortable="true" data-visible="true">PARROQUIA</th>
+                    <th data-field="parroquia" data-sortable="true" data-visible="true" data-filter-control="select">PARROQUIA</th>
                 </tr>
             </thead>
             <tbody></tbody>

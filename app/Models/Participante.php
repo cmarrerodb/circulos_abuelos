@@ -27,6 +27,7 @@ class Participante extends Model
         'municipio_id',
         'parroquia_id',
         'user_id',
+        'telefono',
     ];
 
     public function circulo()

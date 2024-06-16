@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
 use Validator;
+use Log;
 use GuzzleHttp\Client;
 use App\Models\Circulo;
 use App\Models\EstadoCivil;
@@ -34,20 +35,46 @@ class ParticipantesController extends Controller
         $offset = $request->input('offset', 0);
         $limit = $request->input('limit', 10);
         $query = Vparticipante::query();
-        if ($request->has('search')) {
+        if ($request->has('search') && $request->search !== NULL) {
             $search = $request->search;
             $query->where(function ($query) use ($search) {
-                $query->where('circulo', 'Ilike', '%' . $search . '%')
-                ;
+                $query->orWhere('cedula', 'Ilike', '%' . $search . '%');
+                $query->orWhere('primer_nombre', 'Ilike', '%' . $search . '%');
+                $query->orWhere('segundo_nombre', 'Ilike', '%' . $search . '%');
+                $query->orWhere('primer_apellido', 'Ilike', '%' . $search . '%');
+                $query->orWhere('segundo_apellido', 'Ilike', '%' . $search . '%');
+                $query->orWhere('fecha_nacimiento', 'Ilike', '%' . $search . '%');
+                $query->orWhere('sexo', 'Ilike', '%' . $search . '%');
+                $query->orWhere('estado_civil', 'Ilike', '%' . $search . '%');
+                $query->orWhere('estado', 'Ilike', '%' . $search . '%');
+                $query->orWhere('municipio', 'Ilike', '%' . $search . '%');
+                $query->orWhere('parroquia', 'Ilike', '%' . $search . '%');
             });            
         }
         if ($request->has('circulo')) {
             $circulo = $request->circulo;
             $query->where('circulo', '=', $circulo);
         } 
-        else {
-            $query->whereNull('circulo');
-        }        
+        if ($request->has('filter')) {
+            $filters = json_decode($request->get('filter'), true);
+            foreach ($filters as $column => $value) {
+                if (!empty($value)) {
+                    $query->where($column, 'like', "%$value%");
+                }
+            }
+        }
+        if ($request->has('sort')) {
+                $sorts = $request->sort;
+                $orders = $request->order;
+                $query->orderBy($sorts, $orders);
+        }
+        if ($request->has('multiSort')) {
+            $sorts1 = json_encode($request->multiSort);
+            $sorts = json_decode($sorts1, true);
+            foreach ($sorts as $sort) {
+                $query->orderBy($sort['sortName'], $sort['sortOrder']);
+            }
+        }         
         $total = $query->count();
         if ($request->has('limit')) {
             $circulos = $query->skip($offset)->take($limit)->get();
@@ -240,4 +267,5 @@ class ParticipantesController extends Controller
             return response()->json(['error' => 'Error inesperado: ' . $e->getMessage()], 500);
         }
     }
+    
 }

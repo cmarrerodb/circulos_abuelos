@@ -23,14 +23,36 @@ class CirculosController extends Controller
         $offset = $request->input('offset', 0);
         $limit = $request->input('limit', 10);
         $query = Vcirculo::query();
-
         if ($request->has('search')) {
             $search = $request->search;
             $query->where(function ($query) use ($search) {
-                $query->where('circulo', 'Ilike', '%' . $search . '%')
-                ;
-            });            
+                $query->where('estado', 'Ilike', '%' . $search . '%');
+                $query->orWhere('municipio', 'Ilike', '%' . $search . '%');
+                $query->orWhere('parroquia', 'Ilike', '%' . $search . '%');
+                $query->orWhere('comunidad', 'Ilike', '%' . $search . '%');
+                $query->orWhere('circulo', 'Ilike', '%' . $search . '%');
+            });
         }
+        if ($request->has('filter')) {
+            $filters = json_decode($request->get('filter'), true);
+            foreach ($filters as $column => $value) {
+                if (!empty($value)) {
+                    $query->where($column, 'ilike', "%$value%");
+                }
+            }
+        }
+        if ($request->has('sort')) {
+            $sorts = $request->sort;
+            $orders = $request->order;
+            $query->orderBy($sorts, $orders);
+        }      
+        if ($request->has('multiSort')) {
+            $sorts1 = json_encode($request->multiSort);
+            $sorts = json_decode($sorts1, true);
+            foreach ($sorts as $sort) {
+                $query->orderBy($sort['sortName'], $sort['sortOrder']);
+            }
+        }         
         $total = $query->count();
         if ($request->has('limit')) {
             $circulos = $query->skip($offset)->take($limit)->get();

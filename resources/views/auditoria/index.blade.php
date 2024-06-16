@@ -32,20 +32,22 @@
             data-search="true"
             data-search-accent-neutralise="true"
             data-show-refresh="true"
+            data-filter-control="true"
         >
             <thead>
                 <tr>
-                    <th colspan="10">AUDITORÍA</th>
+                    <th colspan="11">AUDITORÍA</th>
                 </tr>
                 <tr>
                     <th data-field="id" data-sortable="true">ID</th>
-                    <th data-field="table_name" data-sortable="true">TABLA</th>
-                    <th data-field="session_user_name" data-sortable="true">USUARIO</th>
-                    <th data-field="nombre_usuario" data-sortable="true">NOMBRE</th>
-                    <th data-field="action_tstamp_tx" data-sortable="true">TIMESTAMP</th>
+                    <th data-field="table_name" data-sortable="true" data-filter-control="select">TABLA</th>
+                    <th data-field="session_user_name" data-sortable="true" data-filter-control="select">USUARIO</th>
+                    <th data-field="nombre_usuario" data-sortable="true" data-filter-control="select">NOMBRE</th>
+                    <th data-field="application_name" data-sortable="true" data-filter-control="select">APLICACIÓN</th>
+                    <th data-field="action_tstamp_tx" data-sortable="true" data-filter-control="input">TIMESTAMP</th>
                     <th data-field="transaction_id" data-visible="false">ID TRANSAC.</th>
-                    <th data-field="client_addr" data-sortable="true">IP</th>
-                    <th data-field="action" data-sortable="true">ACCION</th>
+                    <th data-field="client_addr" data-sortable="true" data-filter-control="input">IP</th>
+                    <th data-field="action" data-sortable="true" data-filter-control="select">ACCION</th>
                     <th data-field="row_data" data-visible="false">DATA</th>
                     <th data-field="changed_fields" data-sortable="true">CAMPOS</th>
                 </tr>
