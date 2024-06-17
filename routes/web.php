@@ -8,6 +8,7 @@ use App\Http\Controllers\ParticipantesController;
 use App\Http\Controllers\AuxiliaresController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuditoriaController;
+use App\Http\Controllers\UserLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('participantes', ParticipantesController::class)->names('admin.paricipants');
     Route::resource('auxiliares', AuxiliaresController::class)->names('admin.auxiliars');
     Route::resource('auditoria', AuditoriaController::class)->names('admin.log');
+    Route::get('/user_logs',[UserLogController::class,'user_logs'])->name('user_logs');
+    Route::get('/tabla_logs',[UserLogController::class,'tabla_logs'])->name('tabla_logs');
+
     Route::get('/audit_tabla',[AuditoriaController::class,'audit_tabla'])->name('audit_tabla');
     Route::get('/circ_tabla',[CirculosController::class,'circ_tabla'])->name('circ_tabla');
     Route::get('/part_tabla',[ParticipantesController::class,'part_tabla'])->name('part_tabla');

@@ -314,163 +314,9 @@ return [
             'icon'        => 'fas fa-circle',
             'can'         => 'admin.circle.index',
         ],
-        // [
-        //     'text'    => 'Gráficos',
-        //     'icon'    => 'fas fa-chart-line',
-        //     'can'     => 'admin.graphics.list',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Movilización Hora',
-        //             'url'  => '#',
-        //         ],
-        //         [
-        //             'text' => 'Movilización Media Hora',
-        //             'url'  => '#',
-        //         ],
-        //         [
-        //             'text' => 'Cumplimiento Gabinete',
-        //             'url'  => '#',
-        //         ],
-        //     ],
-        // ],
-        // [
-        //     'text'    => 'Reportes',
-        //     'icon'    => 'fas fa-window-restore',
-        //     'can'     => 'admin.reports.list',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Cumplimiento',
-        //             'icon' => 'fas fa-thumbtack',
-        //             'submenu' => [
-        //                 [
-        //                     'text' => 'Circuito',
-        //                     'url' => '#',
-        //                 ],
-        //                 [
-        //                     'text' => 'Entes',
-        //                     'url' => '#',
-        //                 ],
-        //                 [
-        //                     'text' => 'Dependencias',
-        //                     'url' => '#',
-        //                 ],
-        //                 [
-        //                     'text' => 'Gabinetes',
-        //                     'url' => '#',
-        //                 ],
-        //                 [
-        //                     'text' => 'Parroquias',
-        //                     'url' => '#',
-        //                 ],
-        //             ],
-        //         ],
-        //         [
-        //             'text' => 'Metas',
-        //             'icon' => 'fas fa-thumbtack',
-        //             'submenu' => [
-        //                 [
-        //                     'text' => 'Circuito',
-        //                     'url' => '#',
-        //                 ],
-        //                 [
-        //                     'text' => 'Entes',
-        //                     'url' => '#',
-        //                 ],
-        //                 [
-        //                     'text' => 'Dependencias',
-        //                     'url' => '#',
-        //                 ],
-        //                 [
-        //                     'text' => 'Gabinetes',
-        //                     'url' => '#',
-        //                 ],
-        //                 [
-        //                     'text' => 'Parroquias',
-        //                     'url' => '#',
-        //                 ],
-        //             ],
-        //         ],
-        //         [
-        //             'text' => 'Movilización',
-        //             'icon' => 'fas fa-thumbtack',
-        //             'submenu' => [
-        //                 [
-        //                     'text' => 'Hora',
-        //                     'url' => '#',
-        //                 ],
-        //                 [
-        //                     'text' => 'Media hora',
-        //                     'url' => '#',
-        //                 ],
-        //             ],
-        //         ],
-        //         [
-        //             'text' => 'Trabajadores',
-        //             'icon' => 'fas fa-thumbtack',
-        //             'submenu' => [
-        //                 [
-        //                     'text' => 'Votaron',
-        //                     'url' => '#',
-        //                 ],
-        //                 [
-        //                     'text' => 'No votaron',
-        //                     'url' => '#',
-        //                 ],
-        //             ],
-        //         ],
-        //     ],
-        // ],
-        // [
-        //     'text'    => 'Auxiliares',
-        //     'icon'    => 'fas fa-toolbox',
-        //     'can'     => 'admin.auxiliary.list',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Auditoría',
-        //             'url'  => '#',
-        //         ],
-        //         // [
-        //         //     'text' => 'Cargos',
-        //         //     'url'  => '#',
-        //         // ],
-        //         // [
-        //         //     'text' => 'Circuitos',
-        //         //     'url'  => '#',
-        //         // ],
-        //         // [
-        //         //     'text' => 'Circuitos Parroquia',
-        //         //     'url'  => '#',
-        //         // ],
-        //         // [
-        //         //     'text' => 'Dependencias',
-        //         //     'url'  => '#',
-        //         // ],
-        //         // [
-        //         //     'text' => 'Entes',
-        //         //     'url'  => '#',
-        //         // ],
-        //         // [
-        //         //     'text' => 'Gabinetes',
-        //         //     'url'  => '#',
-        //         // ],
-        //         [
-        //             'text' => 'Estados',
-        //             'url'  => '#',
-        //         ],
-        //         [
-        //             'text' => 'Municipios',
-        //             'url'  => '#',
-        //         ],
-        //         [
-        //             'text' => 'Parroquias',
-        //             'url'  => '#',
-        //         ],
-        //     ],
-        // ],
         [
             'text'    => 'Seguridad',
             'icon'    => 'fas fa-shield-alt',
-            // 'icon'    => 'fas fa-users-cog',
             'can'    => 'admin.users.list',
             'submenu' => [
                 [
@@ -501,13 +347,25 @@ return [
             ],
         ],
         [
-            'text'        => 'Auditoria',
-            'url'         => 'auditoria',
-            'icon'        => 'fas fa-clipboard-check',
-            // 'can'         => 'admin.circle.index',
-        ],        
-
-
+            'text'    => 'Auditoria',
+            'icon'    => 'fas fa-user-tag',
+            'can'    => 'admin.log.list',
+            'submenu' => [
+                [
+                    'text' => 'Acciones',
+                    'url'  => 'auditoria',
+                    'icon' => 'fas fa-clipboard-check',
+                    'can'  => 'admin.actions.show',
+                ],
+                [
+                    'text' => 'Ingresos',
+                    'url'  => 'user_logs',
+                    'icon' => 'fas fa-clipboard',
+                    'can'  => 'admin.logs.show',
+                    
+                ],
+            ],
+        ],
     ],
 
     /*

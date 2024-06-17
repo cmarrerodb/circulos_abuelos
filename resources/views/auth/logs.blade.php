@@ -1,10 +1,11 @@
 @extends('adminlte::page')
-@section('title','Auditoría')
+@section('title','Auditoría Ingreso')
 @section('content_header')
     <meta name="_token" content="{{ csrf_token() }}">
-    <h1 class="m-0 text-dark">Auditoría</h1>
+    <h1 class="m-0 text-dark">Auditoría Ingreso</h1>
 @stop
 @section('content')
+@include('inclusion.modal_circulos')
 <div class="table-container">
         <table 
             id="tbl-auditoria" 
@@ -12,7 +13,7 @@
             data-toolbar="#toolbar"
             data-toggle="table" 
             data-show-columns="true" 
-            data-url="{{route('audit_tabla')}}" 
+            data-url="{{route('tabla_logs')}}" 
             data-side-pagination="server" 
             data-pagination="true" 
             data-page-list="[10, 20, 50,  100, 'All']" 
@@ -36,26 +37,22 @@
         >
             <thead>
                 <tr>
-                    <th colspan="11">AUDITORÍA</th>
+                    <th colspan="6">AUDITORÍA ACCESOS</th>
                 </tr>
                 <tr>
-                    <th data-field="id" data-sortable="true">ID</th>
-                    <th data-field="table_name" data-sortable="true" data-filter-control="select">TABLA</th>
-                    <th data-field="session_user_name" data-sortable="true" data-filter-control="select">USUARIO</th>
-                    <th data-field="nombre_usuario" data-sortable="true" data-filter-control="select">NOMBRE</th>
-                    <th data-field="application_name" data-sortable="true" data-filter-control="select">APLICACIÓN</th>
-                    <th data-field="action_tstamp_tx" data-sortable="true" data-filter-control="input">FECHA</th>
-                    <th data-field="transaction_id" data-visible="false">ID TRANSAC.</th>
-                    <th data-field="client_addr" data-sortable="true" data-filter-control="input">IP</th>
-                    <th data-field="action" data-sortable="true" data-filter-control="select">ACCION</th>
-                    <th data-field="row_data" data-visible="false">DATA</th>
-                    <th data-field="changed_fields" data-sortable="true">CAMPOS</th>
+                    <th data-field="email" data-sortable="true" data-filter-control="input">USUARIO</th>
+                    <th data-field="name" data-sortable="true" data-filter-control="select">NOMBRE</th>
+                    <th data-field="fecha_hora" data-sortable="true" data-filter-control="select">FECHA</th>
+                    <th data-field="ip_address" data-sortable="true" data-filter-control="input">IP</th>
+                    <th data-field="status_ingreso" data-sortable="true" data-filter-control="input">INGRESO</th>
+                    <th data-field="status_salida" data-sortable="true" data-filter-control="input">EGRESO</th>
                 </tr>
             </thead>
             <tbody></tbody>
         </table>
     </div>
-@stop
+
+    @stop
 @section('css')
 <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
@@ -95,8 +92,5 @@
     <script src="{{ asset('/assets/js/moment.min.js') }}"></script>
     <script src="{{ asset('/assets/libs/tui-chart/tui-chart.min.js') }}"></script>
     <script>
-        $(document).ready(function() {
-       }); 
-
     </script>
 @stop
