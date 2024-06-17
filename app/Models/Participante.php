@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\CapitalizesAttributes;
 class Participante extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory,SoftDeletes, CapitalizesAttributes;
     protected $table = 'participantes';
     protected $primaryKey = 'id';
     public $timestamps = true;
