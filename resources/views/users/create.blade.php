@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Users')
+@section('title', 'Usuarios')
 
 @section('content_header')
-    <h1>Users</h1>
+    <h1>Usuarios</h1>
 @stop
 
 @section('content')
@@ -19,10 +19,10 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Email</th>
+                <th>Nombre</th>
+                <th>Correo</th>
                 <th>Roles</th>
-                <th>Actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
