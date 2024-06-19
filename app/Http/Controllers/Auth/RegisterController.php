@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserState;
+use App\Models\CneEstado;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Rules\PasswordValidation;
-
+use Illuminate\Support\Facades\DB;
 class RegisterController extends Controller
 {
     use RegistersUsers {
@@ -42,11 +44,32 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        DB::beginTransaction();
+        try {
+
+            $id = User::insertGetId([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+            $usuario = User::find($id);
+            $estado = $data['estado'];
+            /////////////
+            // $userState = UserState::where('user_id', $id)->first();
+            if ($estado !== NULL) {
+                UserState::create([
+                    'user_id' => $id,
+                    'estado_id' => $estado,
+                ]);
+            }
+            /////////////
+            // DB::rollback();
+            DB::commit();
+            return $usuario;
+        } catch(\Exception $e) {
+            DB::rollBack();
+            \Log::error($e);
+        }
     }
 
     public function register(Request $request)
@@ -60,4 +83,9 @@ class RegisterController extends Controller
         // Redirigir con un mensaje de éxito
         return redirect('/register')->with('success', "El usuario {$user->name} ha sido creado exitosamente");
     }
+    public function showRegistrationForm()
+    {
+        $estados = CneEstado::all();
+        return view('auth.register', compact('estados'));
+    }    
 }

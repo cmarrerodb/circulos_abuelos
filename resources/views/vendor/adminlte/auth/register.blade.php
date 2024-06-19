@@ -90,6 +90,14 @@
             @enderror
         </div>
 
+        <div class="form-group">
+            <select name="estado" id="estado" class="form-control">
+                <option value="">Seleccione un estado</option>
+                @foreach ($estados as $estado)
+                    <option value="{{ $estado->estado_id }}">{{ $estado->estado }}</option>
+                @endforeach
+            </select>
+        </div>
         {{-- Register button --}}
         <button type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
             <span class="fas fa-user-plus"></span>
@@ -100,11 +108,11 @@
 @stop
 
 @section('auth_footer')
-    <p class="my-0">
+{{--    <p class="my-0">
         <a href="{{ $login_url }}">
             {{ __('adminlte::adminlte.i_already_have_a_membership') }}
         </a>
-    </p>
+    </p>--}}
 @stop
 @section('css')
     <link href="{{ asset('assets/css/toastr.min.css') }}" rel="stylesheet" type="text/css" />

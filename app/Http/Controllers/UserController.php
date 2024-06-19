@@ -2,10 +2,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserState;
+use App\Models\CneEstado;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Rules\PasswordValidation;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
     public function index(Request $request)
@@ -22,7 +25,6 @@ class UserController extends Controller
         }
 
         $users = $query->get();
-        info($users);
         return view('users.index', compact('users'));
     }
 
@@ -41,23 +43,24 @@ class UserController extends Controller
             'role' => 'required|exists:roles,id'
         ]);
         $rol=Role::where('id','=',$request->role)->pluck('name');
+        $this->auditoria($request->user(),addslashes($request->ip()));
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
         ]);
-
         $user->assignRole($rol);
-
         return redirect()->route('users.index');
     }
 
     public function edit($id)
     {
+        $estados = CneEstado::select('estado_id','estado')->orderBy('estado')->get();
         $user = User::findOrFail($id);
         $roles = Role::all();
-        $userRole = $user->roles->first() ?? Role::find(2); // Asigna rol con id 2 si no tiene rol
-        return view('users.edit', compact('user', 'roles', 'userRole'));
+        $estado_usuario = UserState::select('estado_id')->where('user_id','=',$id)->get();
+        $userRole = $user->roles->first() ?? Role::find(2);
+        return view('users.edit', compact('user', 'roles', 'userRole','estados','estado_usuario'));
     }
 
     public function update(Request $request, $id)
@@ -98,13 +101,40 @@ class UserController extends Controller
         ];
         $validated = $request->validate($rules, $messages);
         $rol=Role::where('id','=',$request->role)->pluck('name');
-        $user->update([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => $validated['password'] ? bcrypt($validated['password']) : $user->password,
-        ]);
-        $user->syncRoles($rol);
-        return redirect()->route('users.index');
+        $this->auditoria($request->user(),addslashes($request->ip()));
+        DB::beginTransaction();
+        try {
+            $user->update([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => $validated['password'] ? bcrypt($validated['password']) : $user->password,
+            ]);
+            $userState = UserState::where('user_id', $id)->first();
+            if ($request->estado === null) {
+                if ($userState) {
+                    $userState->delete();
+                }
+            } else {
+                if ($userState) {
+                    $userState->estado_id = $request->estado;
+                    $userState->save();
+                } else {
+                    UserState::create([
+                        'user_id' => $id,
+                        'estado_id' => $request->estado
+                    ]);
+                }   
+            }
+            ///////////////
+            $user->syncRoles($rol);
+            DB::commit();
+            return redirect()->route('users.index');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            // Manejar la excepción, por ejemplo:
+            \Log::error("Error en asignación de estados al usuario $id: " . $e->getMessage());
+            throw $e;
+        }
     }
 
     public function destroy($id)
@@ -113,4 +143,15 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index');
     }
+    private function auditoria($user,$ip) {
+        $applicationName = addslashes("CirculoAbuelos");
+        $cedula = addslashes("0");
+        $usuario = addslashes($user->email);
+        $nombreUsuario = addslashes($user->name);
+        DB::statement("set cc.usuario = '$usuario'");
+        DB::statement("set cc.ip = '$ip'");
+        DB::statement("set cc.ci_usuario = '$cedula'");
+        DB::statement("set cc.nombre_usuario = '$nombreUsuario'");
+        DB::statement("set cc.application_name = '$applicationName'");
+    }   
 }

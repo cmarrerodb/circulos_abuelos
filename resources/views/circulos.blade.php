@@ -41,6 +41,7 @@
             data-search="true"
             data-search-accent-neutralise="true"
             data-show-refresh="true"
+            data-filter-control="true"
         >
             <thead>
                 <tr>
@@ -48,12 +49,12 @@
                     <th data-field="acciones" data-align="center" data-formatter="accionesFormatter" data-events="accionesEvents"></th>
                 </tr>
                 <tr>
-                    <th data-field="id" data-sortable="true">ID</th>
-                    <th data-field="estado" data-sortable="true">ESTADO</th>
-                    <th data-field="municipio" data-sortable="true">MUNICIPIO</th>
-                    <th data-field="parroquia" data-sortable="true">PARROQUIA</th>
-                    <th data-field="comunidad" data-sortable="true">COMUNIDAD</th>
-                    <th data-field="circulo" data-sortable="true">CÍRCULO</th>
+                    <th data-field="id" data-sortable="true" data-filter-control="input">ID</th>
+                    <th data-field="estado" data-sortable="true" data-filter-control="select">ESTADO</th>
+                    <th data-field="municipio" data-sortable="true" data-filter-control="select">MUNICIPIO</th>
+                    <th data-field="parroquia" data-sortable="true" data-filter-control="input">PARROQUIA</th>
+                    <th data-field="comunidad" data-sortable="true" data-filter-control="input">COMUNIDAD</th>
+                    <th data-field="circulo" data-sortable="true" data-filter-control="input">CÍRCULO</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -113,6 +114,7 @@
                         <td><select class="form-control" id="circ_agr_estados"><select></td>
                         <td><select class="form-control" id="circ_agr_municipios"><select></td>
                         <td><select class="form-control" id="circ_agr_parroquias"><select></td>
+                        <td><input type="text" class="form-control" id="agr_comunidad"></td>
                         <td><input type="text" class="form-control" id="agr_circulo"></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Acciones">
@@ -228,6 +230,7 @@
                             'estado_id':$("#circ_agr_estados").val(),
                             'municipio_id':$("#circ_agr_municipios").val(),
                             'parroquia_id':$("#circ_agr_parroquias").val(),
+                            'comunidad':$("#agr_comunidad").val(),
                             'circulo':$("#agr_circulo").val(),
                         }
                         $.ajax({

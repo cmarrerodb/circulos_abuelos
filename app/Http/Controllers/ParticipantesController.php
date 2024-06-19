@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
 use Validator;
+use Log;
 use GuzzleHttp\Client;
 use App\Models\Circulo;
 use App\Models\EstadoCivil;
@@ -18,6 +19,7 @@ use App\Models\CneMunicipio;
 use App\Models\CneParroquia;
 use App\Models\Participante;
 use App\Models\Vparticipante;
+use App\Models\UserState;
 
 class ParticipantesController extends Controller
 {
@@ -26,7 +28,14 @@ class ParticipantesController extends Controller
      */
     public function index()
     {
-        $circulos = Circulo::select('id','circulo')->whereNull('deleted_at')->get();
+        $user = Auth::user();
+        $estado_id = UserState::where('user_id','=',$user->id)->pluck('estado_id');
+        $query = Circulo::query();
+        if (count($estado_id) > 0) {
+            $query->where('estado_id', '=', $estado_id);
+        }
+        $query->whereNull('deleted_at');
+        $circulos = $query->get();
         return view('participantes',compact('circulos'));
     }
     public function part_tabla(Request $request)
@@ -34,20 +43,46 @@ class ParticipantesController extends Controller
         $offset = $request->input('offset', 0);
         $limit = $request->input('limit', 10);
         $query = Vparticipante::query();
-        if ($request->has('search')) {
+        if ($request->has('search') && $request->search !== NULL) {
             $search = $request->search;
             $query->where(function ($query) use ($search) {
-                $query->where('circulo', 'Ilike', '%' . $search . '%')
-                ;
+                $query->orWhere('cedula', 'Ilike', '%' . $search . '%');
+                $query->orWhere('primer_nombre', 'Ilike', '%' . $search . '%');
+                $query->orWhere('segundo_nombre', 'Ilike', '%' . $search . '%');
+                $query->orWhere('primer_apellido', 'Ilike', '%' . $search . '%');
+                $query->orWhere('segundo_apellido', 'Ilike', '%' . $search . '%');
+                $query->orWhere('fecha_nacimiento', 'Ilike', '%' . $search . '%');
+                $query->orWhere('sexo', 'Ilike', '%' . $search . '%');
+                $query->orWhere('estado_civil', 'Ilike', '%' . $search . '%');
+                $query->orWhere('estado', 'Ilike', '%' . $search . '%');
+                $query->orWhere('municipio', 'Ilike', '%' . $search . '%');
+                $query->orWhere('parroquia', 'Ilike', '%' . $search . '%');
             });            
         }
         if ($request->has('circulo')) {
             $circulo = $request->circulo;
             $query->where('circulo', '=', $circulo);
         } 
-        else {
-            $query->whereNull('circulo');
-        }        
+        if ($request->has('filter')) {
+            $filters = json_decode($request->get('filter'), true);
+            foreach ($filters as $column => $value) {
+                if (!empty($value)) {
+                    $query->where($column, 'like', "%$value%");
+                }
+            }
+        }
+        if ($request->has('sort')) {
+                $sorts = $request->sort;
+                $orders = $request->order;
+                $query->orderBy($sorts, $orders);
+        }
+        if ($request->has('multiSort')) {
+            $sorts1 = json_encode($request->multiSort);
+            $sorts = json_decode($sorts1, true);
+            foreach ($sorts as $sort) {
+                $query->orderBy($sort['sortName'], $sort['sortOrder']);
+            }
+        }         
         $total = $query->count();
         if ($request->has('limit')) {
             $circulos = $query->skip($offset)->take($limit)->get();
@@ -117,6 +152,7 @@ class ParticipantesController extends Controller
         ];
         DB::beginTransaction();
         try {
+            $this->auditoria($request->user(),addslashes($request->ip()));
             Participante::create($datos);
             DB::commit();
             return response()->json(['message' => 'Participante registrado exitosamente','status' =>200], 200);
@@ -125,7 +161,17 @@ class ParticipantesController extends Controller
             return response()->json(['message' => 'Ha ocurrido un error en el registro del participante','status'=>500], 200);
         }              
     }
-
+    private function auditoria($user,$ip) {
+        $applicationName = addslashes("CirculoAbuelos");
+        $cedula = addslashes("0");
+        $usuario = addslashes($user->email);
+        $nombreUsuario = addslashes($user->name);
+        DB::statement("set cc.usuario = '$usuario'");
+        DB::statement("set cc.ip = '$ip'");
+        DB::statement("set cc.ci_usuario = '$cedula'");
+        DB::statement("set cc.nombre_usuario = '$nombreUsuario'");
+        DB::statement("set cc.application_name = '$applicationName'");
+    }   
     /**
      * Display the specified resource.
      */
@@ -229,4 +275,5 @@ class ParticipantesController extends Controller
             return response()->json(['error' => 'Error inesperado: ' . $e->getMessage()], 500);
         }
     }
+    
 }

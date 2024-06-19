@@ -4,9 +4,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\CapitalizesAttributes;
 class Circulo extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, CapitalizesAttributes;
     protected $table = 'circulos';
     protected $primaryKey = 'id';
     public $timestamps = true;

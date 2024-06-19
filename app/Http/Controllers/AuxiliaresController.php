@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Models\CneEstado;
 use App\Models\CneMunicipio;
 use App\Models\CneParroquia;
+use App\Models\UserState;
 
 class AuxiliaresController extends Controller
 {
@@ -67,7 +69,14 @@ class AuxiliaresController extends Controller
         //
     }
     public function circ_estados(Request $request) {
-        $estados = CneEstado::select('estado_id','estado')->orderBy('estado_id')->get();
+        $user = Auth::user();
+        $query = CneEstado::query();
+        $estado_id = UserState::where('user_id','=',$user->id)->pluck('estado_id');
+        if (count($estado_id) > 0) {
+            $query->where('estado_id', '=', $estado_id);
+        }
+        $estados = $query->orderBy('estado_id')->get();;
+        // $estados = CneEstado::select('estado_id','estado')->orderBy('estado_id')->get();
         return json_encode($estados);
     }
     public function circ_municipios(Request $request) {

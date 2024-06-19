@@ -9,6 +9,7 @@ class Vparticipante extends Model
     protected $table = 'vparticipantes';
     protected $fillable = [
         'cedula',
+        'telefono',
         'circulo_id',
         'circulo',
         'primer_nombre',

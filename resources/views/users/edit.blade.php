@@ -46,6 +46,16 @@
                 @endforeach
             </select>
         </div>
+        <div class="form-group">
+            <label for="estado">Estado</label>
+            <select name="estado" class="form-control" >
+                @foreach($estados as $estado)
+                    <option value="{{ $estado->estado_id }}" {{ $estado->estado_id == $estado_usuario[0]['estado_id'] ? 'selected' : '' }}>
+                        {{ $estado->estado }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary" title="Guardar"><i class="fas fa-save"></i></button>
     </form>
 @stop
