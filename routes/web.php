@@ -45,16 +45,16 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('participantes', ParticipantesController::class)->names('admin.paricipants');
     Route::resource('auxiliares', AuxiliaresController::class)->names('admin.auxiliars');
     Route::resource('auditoria', AuditoriaController::class)->names('admin.log');
-    Route::get('/user_logs',[UserLogController::class,'user_logs'])->name('user_logs');
-    Route::get('/tabla_logs',[UserLogController::class,'tabla_logs'])->name('tabla_logs');
+    Route::get('user_logs',[UserLogController::class,'user_logs'])->name('user_logs');
+    Route::get('tabla_logs',[UserLogController::class,'tabla_logs'])->name('tabla_logs');
 
-    Route::get('/audit_tabla',[AuditoriaController::class,'audit_tabla'])->name('audit_tabla');
-    Route::get('/circ_tabla',[CirculosController::class,'circ_tabla'])->name('circ_tabla');
-    Route::get('/part_tabla',[ParticipantesController::class,'part_tabla'])->name('part_tabla');
-    Route::post('/check_cedula',[ParticipantesController::class,'check_cedula'])->name('check_cedula');
-    Route::post('/circ_estados',[AuxiliaresController::class,'circ_estados'])->name('circ_estados');
-    Route::post('/circ_municipios',[AuxiliaresController::class,'circ_municipios'])->name('circ_municipios');
-    Route::post('/circ_parroquias',[AuxiliaresController::class,'circ_parroquias'])->name('circ_parroquias');
-    Route::post('/circ_borrar',[CirculosController::class,'circ_borrar'])->name('circ_borrar');
-    Route::post('/circ_emp',[AuxiliaresController::class,'circ_emp'])->name('circ_emp');
+    Route::get('audit_tabla',[AuditoriaController::class,'audit_tabla'])->name('audit_tabla');
+    Route::get('circ_tabla',[CirculosController::class,'circ_tabla'])->name('circ_tabla');
+    Route::get('part_tabla',[ParticipantesController::class,'part_tabla'])->name('part_tabla');
+    Route::post('check_cedula',[ParticipantesController::class,'check_cedula'])->name('check_cedula');
+    Route::post('circ_estados',[AuxiliaresController::class,'circ_estados'])->name('circ_estados');
+    Route::post('circ_municipios',[AuxiliaresController::class,'circ_municipios'])->name('circ_municipios');
+    Route::post('circ_parroquias',[AuxiliaresController::class,'circ_parroquias'])->name('circ_parroquias');
+    Route::post('circ_borrar',[CirculosController::class,'circ_borrar'])->name('circ_borrar');
+    Route::post('circ_emp',[AuxiliaresController::class,'circ_emp'])->name('circ_emp');
 });

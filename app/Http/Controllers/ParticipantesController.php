@@ -19,6 +19,7 @@ use App\Models\CneMunicipio;
 use App\Models\CneParroquia;
 use App\Models\Participante;
 use App\Models\Vparticipante;
+use App\Models\UserState;
 
 class ParticipantesController extends Controller
 {
@@ -27,7 +28,14 @@ class ParticipantesController extends Controller
      */
     public function index()
     {
-        $circulos = Circulo::select('id','circulo')->whereNull('deleted_at')->get();
+        $user = Auth::user();
+        $estado_id = UserState::where('user_id','=',$user->id)->pluck('estado_id');
+        $query = Circulo::query();
+        if (count($estado_id) > 0) {
+            $query->where('estado_id', '=', $estado_id);
+        }
+        $query->whereNull('deleted_at');
+        $circulos = $query->get();
         return view('participantes',compact('circulos'));
     }
     public function part_tabla(Request $request)

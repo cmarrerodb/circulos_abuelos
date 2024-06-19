@@ -22,6 +22,4 @@ Homestead.json
 /.vagrant
 .phpunit.result.cache
 rutas.txt
-db/*.*
 circulos.rar
-*.sql

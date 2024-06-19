@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Circulo;
 use App\Models\Vcirculo;
+use App\Models\UserState;
 class CirculosController extends Controller
 {
     /**
@@ -20,13 +21,19 @@ class CirculosController extends Controller
     }
     public function circ_tabla(Request $request)
     {
+        $user = Auth::user();
+        // $estado_id = UserState::where('user_id','=',$user->id)->pluck('estado_id');
+        $estado_id = UserState::where('user_id','=',$user->id)->pluck('estado_id');
         $offset = $request->input('offset', 0);
         $limit = $request->input('limit', 10);
         $query = Vcirculo::query();
+        if (count($estado_id) > 0) {
+            $query->where('estado_id', '=', $estado_id);
+        }
         if ($request->has('search')) {
             $search = $request->search;
             $query->where(function ($query) use ($search) {
-                $query->where('estado', 'Ilike', '%' . $search . '%');
+                $query->orWhere('estado', 'Ilike', '%' . $search . '%');
                 $query->orWhere('municipio', 'Ilike', '%' . $search . '%');
                 $query->orWhere('parroquia', 'Ilike', '%' . $search . '%');
                 $query->orWhere('comunidad', 'Ilike', '%' . $search . '%');
