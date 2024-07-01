@@ -18,7 +18,12 @@ class CneMunicipio extends Model
             'municipio_id',
             'municipio',
         ];
-    
+        protected static function booted()
+        {
+            static::addGlobalScope('excluirId', function (Builder $builder) {
+                $builder->where('id', '<>', 9999);
+            });
+        }  
         public function estado()
         {
             return $this->belongsTo(CneEstado::class, 'estado_id');
