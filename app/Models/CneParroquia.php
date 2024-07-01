@@ -29,5 +29,11 @@ class CneParroquia extends Model
     public function municipio()
     {
         return $this->belongsTo(CneMunicipio::class, 'municipio_id');
-    }    
+    }
+    protected static function booted()
+    {
+        static::addGlobalScope('excluirId', function (Builder $builder) {
+            $builder->where('id', '<>', 99999);
+        });
+    }     
 }
